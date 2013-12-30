@@ -1,0 +1,32 @@
+<h2>Lista de videos</h2>
+<p>
+    <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/videos/add'); ?>">Adicionar video</a>
+</p>
+<?php if (count($this->rows) > 0): ?>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->rows as $row) :
+                $id = $row->video_id;
+                ?>
+                <tr>
+                    <td><img src="http://i1.ytimg.com/vi/<?php echo $row->video_miniatura; ?>/default.jpg" title="<?php echo $row->video_titulo; ?>"/></td>
+                    <td><?php echo $row->video_titulo; ?></td>
+                    <td>
+                        <a class="btn btn-primary" href="<?php echo $this->baseUrl('adm/videos/edit/id/' . $id); ?>"><i class="icon-search"></i></a>
+                        <a onclick="return confirm('Você tem certeza que quer apagar?')" class="btn btn-danger" href="<?php echo $this->baseUrl('adm/videos/delete/id/' . $id); ?>">Apagar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <tbody>
+    </table>
+<?php else: ?>
+    <p class="alert alert-info">Não há vídeos cadastradas.</p>
+<?php endif; ?><p>

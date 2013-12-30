@@ -1,0 +1,42 @@
+<h2>Lista de banners</h2>
+<p>
+    <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/banners/add/'); ?>">Adicionar banner</a>  
+</p>
+<?php if (count($this->rows) > 0): ?>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Banner</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->rows as $row) :
+                $id = $row->banner_id;
+                $titulo = $row->banner_titulo;
+                $img = $row->banner_imagem;
+                ?>
+                <tr>
+                    <td>
+                        <?php if (empty($img)): ?>
+                            <img src="<?php echo $this->baseUrl('img/no_iPhoto.png'); ?>" width="155px" height="155px" alt="Sem Imagem" title="Sem Imagem"/>
+                        <?php else: ?>
+                            <img src="<?php echo $this->baseUrl('/banners/' . $img); ?>" width="250px" alt="<?php echo $titulo; ?>">
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo $titulo; ?></td>
+                    <td>
+                        <a class="btn btn-primary" href="<?php echo $this->baseUrl('adm/banners/edit/id/' . $id); ?>"><i class="icon-search"></i>Editar</a>
+                        <a onclick="return confirm('Você tem certeza que quer apagar?')" class="btn btn-danger" href="<?php echo $this->baseUrl('adm/banners/delete/id/' . $id); ?>">Apagar</a>
+
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <tbody>
+    </table>
+<?php else: ?>
+    <p class="alert alert-info">Não há banners cadastrados.</p>
+<?php endif; ?><p>
+

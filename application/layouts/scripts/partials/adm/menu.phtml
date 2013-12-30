@@ -1,0 +1,70 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">GilcierWeb</a>
+            <div class="nav-collapse collapse">                       
+                <ul class="nav">
+                    <li class="active"><a href="<?php echo $this->baseUrl('adm'); ?>">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Produtos <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->baseUrl('adm/produtos'); ?>">Listar</a></li>
+                            <li><a href="<?php echo $this->baseUrl('adm/produtos/add'); ?>">Adicionar</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->baseUrl('adm/categorias'); ?>">Listar</a></li>
+                            <li><a href="<?php echo $this->baseUrl('adm/categorias/add'); ?>">Adicionar</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Subcategorias</li>
+                            <li><a href="<?php echo $this->baseUrl('adm/subcategorias'); ?>">Listar</a></li> 
+                            <li><a href="<?php echo $this->baseUrl('adm/subcategorias/add'); ?>">Adicionar</a></li>                                   
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Galerias<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->baseUrl('adm/galerias'); ?>">Listar</a></li>
+                            <li><a href="<?php echo $this->baseUrl('adm/galerias/add'); ?>">Adicionar</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Marcas</li>
+                            <li><a href="<?php echo $this->baseUrl('adm/marcas'); ?>">Listar</a></li> 
+                            <li><a href="<?php echo $this->baseUrl('adm/marcas/add'); ?>">Adicionar</a></li>                                   
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo $this->baseUrl('adm/banners'); ?>">Banners</a></li> 
+                    <li><?php //echo $this->Mylib_Util->anchor('/news/local/123', 'My News', array('title' => 'The best news!')); ?></li>
+                    <li><a href="<?php echo $this->baseUrl('adm/videos'); ?>">Vídeos</a></li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuários<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->baseUrl('auth/user'); ?>">Listar</a></li>
+                            <li><a href="<?php echo $this->baseUrl('auth/user/acl'); ?>">Controle de acesso</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Marcas</li>
+                            <li><a href="<?php echo $this->baseUrl('adm/marcas'); ?>">Listar</a></li> 
+                            <li><a href="<?php echo $this->baseUrl('adm/marcas/add'); ?>">Adicionar</a></li>                                   
+                        </ul>
+                    </li>                   
+                </ul>
+                <p class="navbar-text pull-right">
+                    Logged in as <a href="#" class="navbar-link">Username</a>
+                </p>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+

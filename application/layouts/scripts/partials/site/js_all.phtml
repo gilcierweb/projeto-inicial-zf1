@@ -1,0 +1,117 @@
+<?php if (isset($this->uploaddify)): ?>        
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/adm/uploadify.css">  
+    <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery.uploadify.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#Filedata').uploadify({
+                'method': 'post',
+                'buttonClass': 'btn btn-success',
+                'buttonText': 'Selecionar Arquivos',
+                'fileTypeExts': '*.gif; *.jpg; *.png',
+                'width': 200,
+                'auto': false,
+                'debug': true,
+                'formData': {'produto_id': <?php echo $this->id; ?>},
+                'successTimeout': 5,
+                'swf': '<?php echo $this->baseUrl(); ?>/img/uploadify.swf',
+                'uploader': '<?php echo $this->baseUrl(); ?>/adm/produtosimagens/uploaded'
+                        // Your options here
+            });
+        });
+    </script>
+<?php endif; ?>   
+
+<?php if (isset($this->uploaddifyGalerias)): ?>        
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/adm/uploadify.css">  
+    <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/js/jquery.uploadify.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#Filedata').uploadify({
+                'method': 'post',
+                'buttonClass': 'btn btn-success',
+                'buttonText': 'Selecionar Arquivos',
+                'fileTypeExts': '*.gif; *.jpg; *.png',
+                'width': 200,
+                'auto': false,
+                'debug': true,
+                'formData': {'galeria_id': <?php echo $this->id; ?>},
+                'successTimeout': 5,
+                'swf': '<?php echo $this->baseUrl(); ?>/img/uploadify.swf',
+                'uploader': '<?php echo $this->baseUrl(); ?>/adm/galeriasimagens/uploaded'
+                        // Your options here
+            });
+        });
+    </script>
+<?php endif; ?> 
+
+<?php if (isset($this->deleteMultAjax)): ?>  
+    <script type="text/javascript">
+        $(".ajax-1").click(function()
+        {
+            if (confirm("Deseja realmente fazer isso?")) {
+                var ids = new Array();
+                $('input[type=checkbox]:checked').each(function() {
+                    var id = $(this).val();
+                    ids.push($(this).val());
+                    $('.' + id).fadeOut("slow").hide(1600);
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo $this->baseUrl(); ?>/adm/produtosimagens/delete/id/<?php echo $this->id; ?>",
+                                    data: {id_img: ids},
+                                    success: function(data) {
+                                        $('.contestants_list').append(data);
+                                    }
+                                });
+
+                            }
+
+                        });
+
+
+    </script>
+<?php endif; ?>  
+
+<?php if (isset($this->deleteMultAjaxGalerias)): ?>  
+    <script type="text/javascript">
+        $(".ajax-1").click(function()
+        {
+            if (confirm("Deseja realmente fazer isso?")) {
+                var ids = new Array();
+                $('input[type=checkbox]:checked').each(function() {
+                    var id = $(this).val();
+                    ids.push($(this).val());
+                    $('.' + id).fadeOut("slow").hide(1600);
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo $this->baseUrl(); ?>/adm/galeriasimagens/delete/id/<?php echo $this->id; ?>",
+                                    data: {id_img: ids},
+                                    success: function(data) {
+                                        $('.contestants_list').append(data);
+                                    }
+                                });
+
+                            }
+
+                        });
+
+
+    </script>
+<?php endif; ?> 
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+                    $(function() {
+                        $("#galeria_data").datepicker({
+                            dateFormat: 'dd/mm/yy',
+                            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+                        });
+                    });
+</script>

@@ -1,0 +1,371 @@
+// upload the image
+//                if ($form->prod_img_imagem->isUploaded()) {
+//                    $form->prod_img_imagem->receive();
+//                    $dataprod_img_imagem = '/images/upload/' .
+//                            basename($form->prod_img_imagem->getFileName());
+//$pageForm->image->isUploaded
+//                    foreach ($files as $file => $info) {
+////                    echo $file;
+////                                        echo $info['name'];
+////                        if ($upload->prod_img_imagem->isUploaded($file)) {
+//                        if ($upload->receive($file)) {
+//                            echo $data['prod_img_imagem'] = $info['name'];
+//                            echo '<pre>';
+//                            print_r($data);
+////                        die('giiiii');
+////                         print_r($file);
+//                            echo '</pre>';
+//                            $produtosimagens->insert($data);
+//                        }
+//                    }
+// die('fffffffff');
+//                             Zend_Debug::dump($form);
+//                echo '<pre>';
+//                print_r($data);
+//                echo '</pre>';
+//                }
+// upload the image
+//                if ($pageForm->image->isUploaded()) {
+//                    $pageForm->image->receive();
+//                    $itemPage->image = '/images/upload/' .
+//                            basename($pageForm->image->getFileName());
+//                }
+//                Zend_Debug::dump($form);
+//                echo '<pre>';
+//                print_r($data);
+//                echo '</pre>';
+// save the content
+
+
+   $data = end($dataForm);
+
+        foreach ($data as $key => $value) {
+            $id = next($value);
+            $ids[] = $id;
+        }
+        echo count($ids);
+SELECT `produtos_imagens`.* FROM `produtos_imagens` WHERE (prod_img_id IN ('29,30,31'))
+SELECT `produtos_imagens`.* FROM `produtos_imagens` WHERE (prod_img_id IN ('29', '30', '31'))
+
+assim funciona.!!! 
+$ids = array(1,2,3,4); 
+$where = $produtosimagens->getAdapter()->quoteInto("id ?", $ids);
+$this->delete($where);
+show sql
+SELECT `table`.* FROM `table` WHERE (id IN ('1', '2', '3', '4'))
+
+CREATE TABLE IF NOT EXISTS `produtos_imagens` (
+  `prod_img_id` int(11) NOT NULL AUTO_INCREMENT,
+  `produto_id` int(11) NOT NULL,
+  `prod_img_imagem` varchar(255) DEFAULT NULL,
+  `prod_img_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`prod_img_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+
+CREATE TABLE IF NOT EXISTS `produtos` (
+  `produto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `categoria_id` int(11) NOT NULL,
+  `sub_cat_id` int(11) NOT NULL,
+  `produto_titulo` varchar(255) NOT NULL,
+  `produto_resumo` text NOT NULL,
+  `produto_descricao` longtext NOT NULL,
+  `produto_preco` float NOT NULL,
+  `produto_img_capa` varchar(255) DEFAULT NULL,
+  `produto_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`produto_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+ public function addAction()
+    {
+        // Criação do Objeto Formulário
+        $form = new Application_Form_Marca();
+        $marcas = new Application_Model_Marcas();
+
+        // Há dados para Tratamento?
+        if ($this->getRequest()->isPost()) {
+
+            // Pegamos os Dados como Foram Enviados
+            $data = $this->getRequest()->getPost();
+            // Solicitamos ao Formulário que Verifique os Dados
+            // Preenchimento dos Dados no Formulário
+            if ($form->isValid($data)) {
+
+                // Dados Filtrados pelo Formulário
+                $data = $form->getValues();
+                $marcas->getAdapter()->beginTransaction();
+
+//                $upload = new Zend_File_Transfer_Adapter_Http();
+//                echo $ext = pathinfo($upload->getFileName(), PATHINFO_EXTENSION);
+                $path1 = APPLICATION_PATH . '/../public/marcas/';
+//               echo $path = APPLICATION_PATH . '/../public/marcas/'.mt_rand().'.'.$ext;
+//                $upload->setDestination($path1);
+//                echo '<pre>';
+//               
+//                                print_r($upload->getFileInfo());
+//               $i=$upload->getFileInfo();
+////                $ext = $this->_findexts($upload->getFileName());
+//
+//                $upload->addFilter('Rename',array($path, true));
+//                
+
+                                $upload = new Zend_File_Transfer_Adapter_Http();
+                $filename = $upload->getFilename();
+                $filename = basename($filename);
+             
+
+                $uniqueToken = md5(uniqid(mt_rand(), true));
+                $filterRename = new Zend_Filter_File_Rename(array('target' => $path1 . $uniqueToken . $filename, 'overwrite' => false));
+                $upload->addFilter($filterRename);
+
+//                $upload = new Zend_File_Transfer_Adapter_Http();
+////                $upload->addValidator('Size', false, 5102400, 'prod_img_imagem');
+//                $upload->setDestination(APPLICATION_PATH . '/../public/images/upload');
+//                $files = $upload->getFileInfo();
+// die($upload->getFileName());
+
+                try {
+
+                    if (!$upload->receive()) {
+
+                        // Qualquer Manipulação de Dados
+                        $marcas->insert($data);
+                        $marcas->getAdapter()->commit();
+                        $this->_flashMessenger->addMessage(array('success' => 'Dados salvos com sucesso!'));
+                    }
+                } catch (Zend_File_Transfer_Exception $e) {
+                    $this->_flashMessenger->addMessage(array('error' => $e->getMessage()));
+                } catch (Zend_Db_Table_Exception $e) {
+                    $marcas->getAdapter()->rollBack();
+                    $this->_flashMessenger->addMessage(array('error' => $e->getMessage()));
+                }
+            } else {
+                $form->populate($data);
+            }
+        }
+
+        // Envio para a Camada de Visualização
+        $this->view->form = $form;
+    }
+
+//                if ($form->marca_imagem->receive()) {
+//                    $upload = new Zend_File_Transfer_Adapter_Http();
+//                    echo $ext = pathinfo($upload->getFileName(), PATHINFO_EXTENSION);
+////$upload->addFilter('Rename',$path.mt_rand().'.'.$ext );//die($path.mt_rand().'.'.$ext);
+//                    Zend_Debug::dump($upload->getFileInfo());
+//                    $upload->receive();$uniqueToken = mt_rand();
+//                    $filterFileRename = new Zend_Filter_File_Rename(array(
+//                        'target' => $path . $uniqueToken. '.' . $ext,
+//                    ));
+//
+//                    $file = $transferAdapter->getFileName();
+//
+//                    // new location and name..
+//                    $movedFile = $filterFileRename->filter($file);
+//                    Zend_Debug::dump($upload->getFileInfo());
+//                }
+//                Zend_Debug::dump($_FILES);
+//                echo '<pre>';
+//                                print_r($_FILES);
+//                                
+//                                $name = $form->getValue('name');
+//              $image = $form->getValue('image');
+////                print_r($upload->getFileInfo());
+//                $Filedata = $_FILES["marca_imagem"];
+//                // Instanciamos o objeto Upload
+//                $handle = new Mylib_Classupload_Classupload();
+//                $handle->upload($Filedata);
+//
+//                // Então verificamos se o arquivo foi carregado corretamente
+//                if ($handle->uploaded) {
+////                $handle->image_resize = true;
+////                // $handle->image_ratio_y = false;
+////                $handle->image_ratio_y = true;
+////                $handle->image_x = 640;
+////                $handle->jpeg_quality = 100;
+//                    $handle->file_new_name_body = "1";
+//
+//                    // Definimos a pasta para onde a imagem maior será armazenada fotosG
+//                    $handle->Process($path);
+//
+//                    // Excluimos os arquivos temporarios
+//                    $handle->Clean();
+//                }
+//                // Aqui somente recupero o nome da imagem caso queira fazer um insert em banco de dados
+//              echo  $nome_da_imagem = $handle->file_dst_name;
+//                $upload = new Zend_File_Transfer_Adapter_Http();
+////                $upload->addValidator('Size', false, 5102400, 'prod_img_imagem');
+//                $upload->setDestination(APPLICATION_PATH . '/../public/images/upload');
+//                $files = $upload->getFileInfo();
+// die($upload->getFileName());
+
+//        $request = $this->getRequest();
+//        $post = $request->getPost(); // This contains the POST params
+//        $path = APPLICATION_PATH . '/../public/marcas/';
+//        if ($request->isPost()) {
+//            if ($form->isValid($post)) {
+//
+//                $upload = new Zend_File_Transfer_Adapter_Http();
+//                echo $ext = pathinfo($upload->getFileName(), PATHINFO_EXTENSION);
+//                $filename = $upload->getFilename();
+//                $filename = basename($filename);
+//
+//
+//                $uniqueToken = trim(mt_rand());
+//                $filterRename = new Zend_Filter_File_Rename(array('target' => $path . $uniqueToken . '.' . $ext, 'overwrite' => false));
+//                $upload->addFilter($filterRename);
+//
+//                if (!$upload->receive()) {
+//                    $this->view->message = 'Error receiving the file';
+//                    return;
+//                }
+//
+//                $this->view->message = 'Screenshot(s) successfully uploaded';
+//            }
+//        }
+
+ public function _findexts($filename)
+    {
+
+        $filename = strtolower($filename);
+
+        $exts = preg_split("[/\.]", $filename);
+
+        $n = count($exts) - 1;
+
+        $exts = $exts[$n];
+
+        return $exts;
+    }
+
+  $util = new Mylib_Util();
+        echo $util->random_string('numeric', 2);
+        $string = "Here is a nice text string consisting of eleven words.";
+
+        echo $string = $util->word_limiter($string, 5);
+        echo '<br />';
+        echo $util->site_url('/news/local/123');
+        echo '<br />';
+        echo $util->anchor('/news/local/123', 'My News', array('title' => 'The best news!'));
+        $title = "What's wrong with CSS?";
+
+        ECHO $url_title = $util->url_title($title, '_', TRUE);
+
+        $atts = array(
+            'width' => '800',
+            'height' => '600',
+            'scrollbars' => 'yes',
+            'status' => 'yes',
+            'resizable' => 'yes',
+            'screenx' => '0',
+            'screeny' => '0'
+        );
+
+        echo $util->anchor_popup('/news/local/123', 'Click Me!', $atts);
+
+        $string = "Here is a nice text string consisting of eleven words.";
+
+        echo '<br>' . $string = $util->character_limiter($string, 20);
+
+ public function editAction()
+    {
+        // Criação do Objeto Formulário
+        $form = new Application_Form_Banner();
+        $banners = new Application_Model_Banners();
+
+        $id = $this->_request->getParam('id');
+        $datadb = $banners->find($id)->current()->toArray();
+        $path = APPLICATION_PATH . '/../public/banners/';
+        echo $datadb['banner_imagem'];
+//        Zend_Debug::dump( $form->getValues());
+        // Há dados para Tratamento?
+        if ($this->getRequest()->isPost()) {
+
+            // Pegamos os Dados como Foram Enviados
+            $data = $this->getRequest()->getPost();
+
+//            $data = $form->getValues();
+
+//            Zend_Debug::dump($this->getRequest()->getPost());
+            print($form->getValue('banner_imagem'));
+            $banner_imagem = $form->getValue('banner_imagem');
+
+
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+            if ($form->isValid($data)) {
+//                Zend_Debug::dump($this->getRequest()->getPost());
+                try {
+                    // Dados Filtrados pelo Formulário
+                    $banners->getAdapter()->beginTransaction();
+//                    Zend_Debug::dump($banner_imagem);
+                    if (!empty($banner_imagem)) {
+                        //gambi para renomear arquivos
+                        $upload = new Zend_File_Transfer_Adapter_Http();
+//                $upload->addValidator('Size', false, array('min' => 100,
+//                    'max' => 1150000,
+//                    'bytestring' => true));
+//                        $upload->addValidator('ImageSize', false, array(
+//                            'minwidth' => 10, 'minheight' => 10,
+//                            'maxwidth' => 5500, 'maxheight' => 5500));
+                        $filename = $upload->getFilename();
+                        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                        $filename = basename($filename);
+                        $newfilename = mt_rand() . '.' . $ext;
+                        $upload->addFilter(new Zend_Filter_File_Rename(array('target' => $path . $newfilename, 'overwrite' => false)));
+                        if (!$upload->isValid()) {
+                            $this->_flashMessenger->addMessage(array('error' => 'O tamanho arquivo é muito grande.'));
+                        }
+                        if ($upload->receive()) {
+
+                            //Para funcionar esse metodo $form->getValues(); precisa ficar abaixo do método $upload->receive()
+                            $data = $form->getValues();
+                            $data['banner_imagem'] = $newfilename;
+                            // Qualquer Manipulação de Dados
+                            $where = $banners->getAdapter()->quoteInto("banner_id = ?", $id);
+                            $banners->update($data, $where);
+                            $banners->getAdapter()->commit();
+                            $form->reset(); //limpa os campos do form.
+                            $this->_flashMessenger->addMessage(array('success' => 'Dados salvos com sucesso!'));
+                        }
+                    } else {
+                        $form->getElement('banner_imagem')->setRequired(false);
+                        $form->getElement('banner_imagem')->setIgnore(true);
+                        //Para funcionar esse metodo $form->getValues(); precisa ficar abaixo do método $upload->receive()
+                        $data = $form->getValues();
+                        $data['banner_imagem'] = $datadb['banner_imagem'];
+                        // Qualquer Manipulação de Dados
+                        $where = $banners->getAdapter()->quoteInto("banner_id = ?", $id);
+                        $banners->update($data, $where);
+                        $banners->getAdapter()->commit();
+                        $form->reset(); //limpa os campos do form.
+                        $this->_flashMessenger->addMessage(array('success' => 'Dados salvos com sucesso!'));
+                    }
+                } catch (Exception $e) {
+                    $this->_flashMessenger->addMessage(array('error' => $e->getMessage()));
+                } catch (Zend_File_Transfer_Exception $e) {
+                    $this->_flashMessenger->addMessage(array('error' => $e->getMessage()));
+                } catch (Zend_Db_Table_Exception $e) {
+                    $banners->getAdapter()->rollBack();
+                    $this->_flashMessenger->addMessage(array('error' => $e->getMessage()));
+                }
+            }
+        }
+
+//        Zend_Debug::dump($data);
+        $form->populate($datadb);
+        $imagePreview = $form->createElement('image', 'image_preview');
+// element options
+        $imagePreview->setLabel('Preview Image: ');
+        $imagePreview->setAttrib('style', 'width:200px;height:auto;');
+// add the element to the form
+        $imagePreview->setOrder(4);
+        $imagePreview->setImage($datadb['banner_imagem']);
+
+        $form->addElement($imagePreview);
+
+
+        // Envio para a Camada de Visualização
+        $this->view->form = $form;
+    }

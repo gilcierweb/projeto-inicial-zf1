@@ -1,0 +1,25 @@
+<ul class="thumbnails">
+    <?php
+    foreach ($this->rows as $row):
+        $id = $row->produto_id;
+        $img = $row->produto_img_capa;
+        ?>
+        <li class="span3">
+            <div class="thumbnail">
+                <a href="<?php echo $this->baseUrl('default/produtos/id/' . $id); ?>">
+                    <?php if (!file_exists($this->baseUrl('/produtos/' . $id . '/fotosD/' . $img)) || empty($img)): ?>
+                        <img src="<?php echo $this->baseUrl('img/no_iPhoto.png'); ?>" width="155px" height="155px" alt="Sem Imagem Capa" title="Sem Imagem Capa"/>
+                    <?php else: ?>
+                        <img src="<?php echo $this->baseUrl('/produtos/' . $id . '/fotosD/' . $img); ?>" alt="">
+                    <?php endif; ?>
+                </a>
+                <div class="caption">
+                    <h4><?php echo $row->produto_titulo; ?></h4>
+                    <p>Texto do thumbnail...</p>
+                    <a class="btn btn-primary" href="<?php echo $this->baseUrl('default/produtos/id/' . $id); ?>">Ver detalhes</a>
+
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ul>

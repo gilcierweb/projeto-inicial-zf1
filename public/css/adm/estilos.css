@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20/10/2013, 19:33:16
+    Author     : gilcierweb
+*/
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+#container{
+    margin: 10px;
+    border: 1px solid #888;
+    box-shadow: 0px 0px 8px #888;
+    -webkit-box-shadow: 0px 0px 8px #888;
+    -moz-box-shadow: 0px 0px 8px #888;
+
+}
+
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+
+.row-fluid ul.thumbnails li.span12 + li { margin-left : 0px;clear:left }
+
+.row-fluid ul.thumbnails li.span6:nth-child(2n + 3) { margin-left : 0px;clear:left }
+.row-fluid ul.thumbnails li.span4:nth-child(3n + 4) { margin-left : 0px;clear:left }
+.row-fluid ul.thumbnails li.span3:nth-child(4n + 5) { margin-left : 0px; clear:left}
+.row-fluid ul.thumbnails li.span2:nth-child(6n + 7) { margin-left : 0px;clear:left }
+.row-fluid ul.thumbnails li.span1:nth-child(12n + 13) { margin-left : 0px;clear:left }
+
+
+
+
+
+
+

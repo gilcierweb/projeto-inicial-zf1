@@ -1,0 +1,38 @@
+<h2>Imagens Galeria #<?php echo $this->id; ?></h2>
+<p>
+    <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/galeriasimagens/upload/id/' . $this->id); ?>">Adicionar imagens</a>
+    <a class="ajax-1 btn btn-danger" href="#">Apagar</a>
+</p>
+<?php if (count($this->rows) > 0): ?>
+    <form name="form_img" id="form_img" method="post">
+        <ul class="thumbnails">
+            <?php
+            foreach ($this->rows as $row) :
+                $id = $row->galeria_id;
+                $id_img = $row->galeria_imagem_id;
+                $img = $row->galeria_imagem;
+                ?>
+
+                <li class="span3 <?php echo $id_img; ?>">
+                    <div class="thumbnail">
+                        <a href="#" class="thumbnail inner-border">
+                            <span></span>
+                            <img src="<?php echo $this->baseUrl('/galerias/' . $id . '/fotosD/' . $img); ?>" alt="">
+                        </a>
+                        <div class="caption">
+                            <input type="checkbox" name="img[]" id="<?php echo $id_img; ?>" value="<?php echo $id_img; ?>" class="img"/>
+                            <a class="btn btn-primary" href="<?php echo $this->baseUrl('adm/galeriasimagens/imgcapa/id/' . $id . '/img/' . $img); ?>">Tornar capa</a>
+                            <!--                            <a class="ajax-1 btn btn-danger" href="#">Apagar</a>-->
+
+                        </div>
+                    </div>
+                </li>
+
+            <?php endforeach; ?>
+        </ul>
+        <div class="contestants_list"></div>
+    </form>
+<?php else: ?>
+    <p class="alert alert-info">Não há imagens cadastradas para essa galerias.</p>
+<?php endif; ?>
+

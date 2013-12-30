@@ -1,0 +1,35 @@
+<h3>Lista de produtos</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Miniatura</th>
+            <th>titulo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($this->rows as $row):
+            $id = $row->produto_id;
+            $img = $row->produto_img_capa;
+            ?>
+            <tr>
+                <td>
+                    <?php if (!file_exists($this->baseUrl('/produtos/' . $id . '/fotosD/' . $img)) || empty($img)): ?>
+                        <img src="<?php echo $this->baseUrl('img/no_iPhoto.png'); ?>" width="155px" height="155px" alt="Sem Imagem Capa" title="Sem Imagem Capa"/>
+                    <?php else: ?>
+                        <img src="<?php echo $this->baseUrl('/produtos/' . $id . '/fotosD/' . $img); ?>" alt="">
+                    <?php endif; ?>
+                </td>
+                <td><?php echo $row->produto_titulo; ?></td>
+                <td>
+                    <a class="btn btn-primary" href="<?php echo $this->baseUrl('adm/produtos/edit/id/' . $id); ?>"><i class="icon-search"></i></a>
+                    <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/produtosimagens/upload/id/' . $id); ?>"><i class="icon-search"></i></a>
+                    <a class="btn btn-info" href="<?php echo $this->baseUrl('adm/produtosimagens/index/id/' . $id); ?>"><i class="icon-search"></i></a>
+                    <a onclick="return confirm('Você tem certeza que quer apagar?')" class="btn btn-danger" href="<?php echo $this->baseUrl('adm/produtos/delete/id/' . $id); ?>">Apagar</a>
+
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <tbody>
+</table>

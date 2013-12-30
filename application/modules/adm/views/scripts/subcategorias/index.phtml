@@ -1,0 +1,27 @@
+<h2>Lista de subcategorias</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($this->rows as $row) :
+            $id = $row->sub_cat_id;
+            ?>
+            <tr>
+                <td><?php echo $row->sub_cat_nome; ?></td>
+                <td><?php echo $row->sub_cat_descricao; ?></td>
+                <td>
+                    <a class="btn btn-primary" href="<?php echo $this->baseUrl('adm/subcategorias/edit/id/' . $id); ?>"><i class="icon-search"></i></a>
+                    <a onclick="return confirm('Você tem certeza que quer apagar?')" class="btn btn-danger" href="<?php echo $this->baseUrl('adm/subcategorias/delete/id/' . $id); ?>">Apagar</a>
+
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <tbody>
+</table>
+

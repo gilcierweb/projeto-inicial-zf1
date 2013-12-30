@@ -1,0 +1,12 @@
+<h2>Upload de imagens da galeria #<?php echo $this->id; ?></h2>
+<form method="post">
+    <div class="upload_content">
+
+        <p>Selecione um ou várias imagens, as imagens serão Redimensionadas </p>
+
+        <input type="file" name="Filedata" id="Filedata" />
+        <div class="upload_enviar">
+            <a href="javascript:$('#Filedata').uploadify('upload','*')" class="btn btn-primary">Enviar Arquivos</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+<h2>Imagens Produto #<?php echo $this->id; ?></h2>
+<p>
+    <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/produtosimagens/upload/id/' . $this->id); ?>">Adicionar imagens</a>
+    <a class="ajax-1 btn btn-danger" href="#">Apagar</a>
+</p>
+<?php if (count($this->rows) > 0): ?>
+    <form name="form_img" id="form_img" method="post">
+        <ul class="thumbnails">
+            <?php
+            foreach ($this->rows as $row) :
+                $id = $row->produto_id;
+                $id_img = $row->prod_img_id;
+                $img = $row->prod_img_imagem;
+                ?>
+
+                <li class="span3 <?php echo $id_img; ?>">
+                    <div class="thumbnail">
+                        <a href="#" class="thumbnail inner-border">
+                            <span></span>
+                            <img src="<?php echo $this->baseUrl('/produtos/' . $id . '/fotosD/' . $img); ?>" alt="">
+                        </a>
+                        <div class="caption">
+                            <input type="checkbox" name="img[]" id="<?php echo $id_img; ?>" value="<?php echo $id_img; ?>" class="img"/>
+                            <a class="btn btn-success" href="<?php echo $this->baseUrl('adm/produtosimagens/imgcapa/id/' . $id . '/img/' . $img); ?>">Tornar capa</a>
+                        </div>
+                    </div>
+                </li>
+
+            <?php endforeach; ?>
+        </ul>
+        <div class="contestants_list"></div>
+    </form>
+<?php else: ?>
+    <p class="alert alert-info">Não há imagens cadastradas para esse produto.</p>
+<?php endif; ?>
